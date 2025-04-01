@@ -1,13 +1,13 @@
-//Alumno.tsx
+//EventosEspeciales.tsx
 import React, { useState } from 'react';
 import Header from './Header';
 
-interface AlumnoProps {
+interface EventosEspecialesProps {
     onLogout: () => void;
     onNavigateToMenu: () => void; // Nueva propiedad para ir al menú
 }
 
-const Alumno: React.FC<AlumnoProps> = ({ onLogout, onNavigateToMenu }) => {
+const EventosEspeciales: React.FC<EventosEspecialesProps> = ({ onLogout, onNavigateToMenu }) => {
     const [showForm, setShowForm] = useState(false);
 
     const handleScan = () => {
@@ -27,18 +27,18 @@ const Alumno: React.FC<AlumnoProps> = ({ onLogout, onNavigateToMenu }) => {
             <button id="logout" onClick={onLogout}>
                 Cerrar Sesión
             </button>
-            <h2>Escanear Código QR</h2>
+           
             <video id="qr-video"></video>
-            <p id="qr-result">Esperando escaneo...</p>
+           
             <button id="scan-qr" onClick={handleScan}>
-                Escanear
+                Hacer un evento especial
             </button>
 
             {showForm && (
                 <form id="info-form" onSubmit={handleSubmit}>
-                    <input type="text" id="nombre" placeholder="Nombre" readOnly />
-                    <input type="text" id="matricula" placeholder="Matrícula" readOnly />
-                    <input type="text" id="carrera" placeholder="Carrera" readOnly />
+                    <input type="text" id="nombre" placeholder="Nombre"  />
+                    <input type="text" id="matricula" placeholder="Matrícula"  />
+                    <input type="text" id="carrera" placeholder="Carrera"  />
 
                     <label htmlFor="asociacion">Asociación:</label>
                     <select id="asociacion">
@@ -71,7 +71,7 @@ const Alumno: React.FC<AlumnoProps> = ({ onLogout, onNavigateToMenu }) => {
                     </select>
 
                     <label htmlFor="hora-llegada">Hora de llegada:</label>
-                    <input type="text" id="hora-llegada" />
+                    <input type="text" id="hora-llegada"  />
 
                     <label htmlFor="motivo">Motivo de visita:</label>
                     <select id="motivo">
@@ -102,4 +102,4 @@ const Alumno: React.FC<AlumnoProps> = ({ onLogout, onNavigateToMenu }) => {
     );
 };
 
-export default Alumno;
+export default EventosEspeciales;
