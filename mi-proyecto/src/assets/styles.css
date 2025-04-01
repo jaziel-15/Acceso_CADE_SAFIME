@@ -1,0 +1,174 @@
+/* Importamos las fuentes necesarias */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+/* Definimos las variables de color */
+:root {
+    --verde-oscuro: #004d00;
+    --verde-claro: #66b266;
+    --blanco: #ffffff;
+    --gris-claro: #f2f2f2;
+    --gris-oscuro: #333333;
+}
+
+/* Reset de márgenes y paddings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilo del cuerpo de la página */
+body {
+    font-family: 'Open Sans', sans-serif; /* Fuente principal */
+    background-color: var(--gris-claro);
+    color: var(--gris-oscuro);
+    line-height: 1.6;
+    padding-top: 120px; /* Espacio para el encabezado fijo */
+}
+
+/* Estilo del encabezado */
+header {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+/* Estilos para imagenes del encabezado */
+header img {
+    height: 80px;
+    width: auto;
+    background-color: transparent; /* Fondo transparente para los logotipos */
+}
+
+header .logo-fime {
+    order: 1;
+}
+
+header .logo-safime {
+    order: 2;
+}
+
+header .logo-uanl {
+    order: 3;
+}
+
+/* Contenedor principal */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--blanco);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+/* Estilo de los formularios */
+form {
+    background-color: var(--blanco);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Estilo de los encabezados */
+h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: 400;
+    color: var(--verde-oscuro);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input[type="text"],
+input[type="password"],
+select,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--gris-oscuro);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Aplicamos white-space: pre-wrap a los campos de texto para preservar los saltos de línea y espacios en blanco */
+.texto-con-formato {
+    white-space: pre-wrap;
+}
+
+button {
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Bebas Neue', sans-serif; /* Aplicamos Bebas Neue a los botones */
+    font-size: 18px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Cambia el color cuando el cursor está en el boton*/
+button:hover {
+    background-color: var(--verde-claro);
+}
+
+/* Estilo de los enlaces */
+a {
+    color: var(--verde-oscuro);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Estilo de los mensajes */
+.message {
+    background-color: var(--verde-claro);
+    color: var(--blanco);
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        height: auto;
+        padding: 10px 0;
+    }
+
+    header img {
+        height: 60px;
+        margin: 5px 0;
+    }
+
+    body {
+        padding-top: 160px; /* Ajuste para el encabezado más alto en dispositivos móviles */
+    }
+}
