@@ -27,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess, onNavigateToRegister }) =
     return (
         <div>
             <Header /> {/* Header aparece en la parte superior */}
-            <div id="login-container">
+            <div className="container">
                 <h2>Iniciar Sesión</h2>
                 <form onSubmit={handleLogin}>
                     <input

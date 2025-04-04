@@ -11,7 +11,7 @@ const Scanner: React.FC = () => {
     };
 
     return (
-        <div id="main-container">
+        <div className="container">
             <h2>Escanear Código QR</h2>
             <video id="qr-video"></video>
             <p>{result || 'Esperando escaneo...'}</p>

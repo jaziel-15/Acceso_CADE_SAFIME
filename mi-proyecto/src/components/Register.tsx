@@ -27,7 +27,7 @@ const Register: React.FC<RegisterProps> = ({ onRegisterSuccess, onNavigateToLogi
     return (
         <div>
             <Header /> {/* Header aparece en la parte superior */}
-            <div id="register-container">
+            <div className="container">
                 <h2>Registro de Usuario</h2>
                 <form onSubmit={handleRegister}>
                     <input

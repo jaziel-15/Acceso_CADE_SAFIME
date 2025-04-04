@@ -22,7 +22,7 @@ const Alumno: React.FC<AlumnoProps> = ({ onLogout, onNavigateToMenu }) => {
     };
 
     return (
-        <div id="main-container">
+        <div className="container">
             <Header />
             <button id="logout" onClick={onLogout}>
                 Cerrar Sesión
