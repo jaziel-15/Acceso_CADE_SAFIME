@@ -6,6 +6,7 @@ import Scanner from './components/Scanner';
 import Menu from './components/Menu';
 import Alumno from './components/Alumno';
 import EventosEspeciales from './components/EventosEspeciales';
+import QRCodeComponent from './components/QRcode';
 
 const App: React.FC = () => {
     const [view, setView] = useState('login'); // Controla la vista actual
@@ -76,7 +77,11 @@ const App: React.FC = () => {
 
             {/* Vista de "Eventos Especiales" */}
             {view === 'eventos' && <EventosEspeciales onLogout={handleLogout} onNavigateToMenu={() => setView('menu')} />}
+
+                
+            <QRCodeComponent />
         </div>
+        
     );
 };
 
