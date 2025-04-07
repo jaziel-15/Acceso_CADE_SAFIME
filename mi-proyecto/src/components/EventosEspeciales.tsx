@@ -23,7 +23,7 @@ const EventosEspeciales: React.FC<EventosEspecialesProps> = ({ onLogout, onNavig
     };
 
     return (
-        <div id="main-container">
+        <div className="container">
             <Header />
             <button id="logout" onClick={onLogout}>
                 Cerrar Sesión

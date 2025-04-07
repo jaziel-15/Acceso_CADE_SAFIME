@@ -10,7 +10,7 @@ interface MenuProps {
 
 const Menu: React.FC<MenuProps> = ({ onLogout, onNavigateToAlumno, onNavigateToEventos }) => {
     return (
-        <div>
+        <div className="container">
             <Header /> {/* Header aparece en la parte superior */}
             <h2>Menú Principal</h2>
             <button onClick={onNavigateToAlumno}>Ingresar un alumno</button>
