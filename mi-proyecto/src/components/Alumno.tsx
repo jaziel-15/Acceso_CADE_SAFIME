@@ -1,6 +1,7 @@
 //Alumno.tsx
 import React, { useState } from 'react';
 import Header from './Header';
+import QRCodeComponent from './QRcode';
 
 interface AlumnoProps {
     onLogout: () => void;
@@ -27,7 +28,8 @@ const Alumno: React.FC<AlumnoProps> = ({ onLogout, onNavigateToMenu }) => {
             <button id="logout" onClick={onLogout}>
                 Cerrar Sesión
             </button>
-            <h2>Escanear Código QR</h2>
+            
+            <QRCodeComponent />
             <video id="qr-video"></video>
             <p id="qr-result">Esperando escaneo...</p>
             <button id="scan-qr" onClick={handleScan}>

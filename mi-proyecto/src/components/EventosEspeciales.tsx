@@ -1,6 +1,7 @@
 //EventosEspeciales.tsx
 import React, { useState } from 'react';
 import Header from './Header';
+import QRCodeComponent from './QRcode';
 
 interface EventosEspecialesProps {
     onLogout: () => void;
@@ -27,7 +28,7 @@ const EventosEspeciales: React.FC<EventosEspecialesProps> = ({ onLogout, onNavig
             <button id="logout" onClick={onLogout}>
                 Cerrar Sesión
             </button>
-           
+            <QRCodeComponent />
             <video id="qr-video"></video>
            
             <button id="scan-qr" onClick={handleScan}>
