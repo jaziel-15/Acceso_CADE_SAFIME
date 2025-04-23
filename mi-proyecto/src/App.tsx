@@ -6,6 +6,7 @@ import Scanner from './components/Scanner';
 import Menu from './components/Menu';
 import Alumno from './components/Alumno';
 import EventosEspeciales from './components/EventosEspeciales';
+import Reporte from './components/Reporte';
 
 
 const App: React.FC = () => {
@@ -41,6 +42,9 @@ const App: React.FC = () => {
     const handleNavigateToRegister = () => {
         setView('register'); // Cambiar a la vista de registro
     };
+    const handleNavigateToReporte = () => {
+        setView('reporte');
+    };
 
     return (
         <div>
@@ -69,6 +73,7 @@ const App: React.FC = () => {
                     onLogout={handleLogout}
                     onNavigateToAlumno={handleNavigateToAlumno}
                     onNavigateToEventos={handleNavigateToEventos}
+                    onNavigateToReporte={handleNavigateToReporte}
                 />
             )}
 
@@ -77,7 +82,7 @@ const App: React.FC = () => {
 
             {/* Vista de "Eventos Especiales" */}
             {view === 'eventos' && <EventosEspeciales onLogout={handleLogout} onNavigateToMenu={() => setView('menu')} />}
-
+            {view === 'reporte' && <Reporte onLogout={handleLogout} />}
             
         </div>
         
