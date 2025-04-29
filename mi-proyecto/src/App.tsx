@@ -1,4 +1,3 @@
-// src/App.tsx
 import React, { useState } from 'react';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -7,88 +6,67 @@ import Menu from './components/Menu';
 import Alumno from './components/Alumno';
 import EventosEspeciales from './components/EventosEspeciales';
 import Reporte from './components/Reporte';
-
+import TablaUsuariosVista from './components/TablaUsuariosVista'; // <-- IMPORTA el componente de usuarios
 
 const App: React.FC = () => {
-    const [view, setView] = useState('login'); // Controla la vista actual
+    const [view, setView] = useState('login');
 
-    // Función para manejar inicio de sesión exitoso
-    const handleLoginSuccess = () => {
-        setView('menu'); // Cambiar a la vista del menú después del inicio de sesión
-    };
-
-    // Función para manejar registro exitoso
+    const handleLoginSuccess = () => setView('menu');
     const handleRegisterSuccess = () => {
         alert('Registro exitoso, ahora puedes iniciar sesión.');
-        setView('login'); // Cambiar a la vista de inicio de sesión después del registro
+        setView('login');
     };
-
-    // Función para manejar cierre de sesión
-    const handleLogout = () => {
-        setView('login'); // Volver a la vista de inicio de sesión
-    };
-
-    // Función para navegar a la vista "Ingresar otro alumno"
-    const handleNavigateToAlumno = () => {
-        setView('alumno'); // Cambiar a la vista del componente "Alumno"
-    };
-
-    // Función para navegar a la vista "Eventos Especiales"
-    const handleNavigateToEventos = () => {
-        setView('eventos'); // Cambiar a la vista del componente "EventosEspeciales"
-    };
-
-    // Función para navegar al formulario de registro desde login
-    const handleNavigateToRegister = () => {
-        setView('register'); // Cambiar a la vista de registro
-    };
-    const handleNavigateToReporte = () => {
-        setView('reporte');
-    };
+    const handleLogout = () => setView('login');
+    const handleNavigateToAlumno = () => setView('alumno');
+    const handleNavigateToEventos = () => setView('eventos');
+    const handleNavigateToReporte = () => setView('reporte');
 
     return (
         <div>
-            {/* Vista de Login */}
             {view === 'login' && (
                 <Login
                     onLoginSuccess={handleLoginSuccess}
-                    onNavigateToRegister={handleNavigateToRegister}
+                    onNavigateToRegister={() => setView('register')}
                 />
             )}
-
-            {/* Vista de Registro */}
             {view === 'register' && (
                 <Register
                     onRegisterSuccess={handleRegisterSuccess}
                     onNavigateToLogin={() => setView('login')}
                 />
             )}
-
-            {/* Vista de Escaneo */}
             {view === 'scanner' && <Scanner />}
-
-            {/* Vista del Menú */}
             {view === 'menu' && (
-                <Menu
+                <>
+                    <Menu
+                        onLogout={handleLogout}
+                        onNavigateToAlumno={handleNavigateToAlumno}
+                        onNavigateToEventos={handleNavigateToEventos}
+                        onNavigateToReporte={handleNavigateToReporte}
+                    />
+                    {/* Aquí mostramos la tabla de usuarios */}
+                    <TablaUsuariosVista />
+                </>
+            )}
+            {view === 'alumno' && (
+                <Alumno
                     onLogout={handleLogout}
-                    onNavigateToAlumno={handleNavigateToAlumno}
-                    onNavigateToEventos={handleNavigateToEventos}
-                    onNavigateToReporte={handleNavigateToReporte}
+                    onNavigateToMenu={() => setView('menu')}
                 />
             )}
-
-            {/* Vista de "Ingresar otro alumno" */}
-            {view === 'alumno' && <Alumno onLogout={handleLogout} onNavigateToMenu={() => setView('menu')} />}
-
-            {/* Vista de "Eventos Especiales" */}
-            {view === 'eventos' && <EventosEspeciales onLogout={handleLogout} onNavigateToMenu={() => setView('menu')} />}
-            {view === 'reporte' && <Reporte onLogout={handleLogout} />}
-            
+            {view === 'eventos' && (
+                <EventosEspeciales
+                    onLogout={handleLogout}
+                    onNavigateToMenu={() => setView('menu')}
+                />
+            )}
+            {view === 'reporte' && (
+                <Reporte
+                    onLogout={handleLogout}
+                />
+            )}
         </div>
-        
     );
 };
 
 export default App;
-
-
