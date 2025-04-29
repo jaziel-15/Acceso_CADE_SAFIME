@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../services/supabase';
 
 interface Visita {
-    id: string;
     nombre: string;
     matricula: string;
     asociacion: string;
