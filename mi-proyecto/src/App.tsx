@@ -6,7 +6,7 @@ import Menu from './components/Menu';
 import Alumno from './components/Alumno';
 import EventosEspeciales from './components/EventosEspeciales';
 import Reporte from './components/Reporte';
-import TablaUsuariosVista from './components/TablaUsuariosVista'; // <-- IMPORTA el componente de usuarios
+import VerBaseDatos from './components/VerBaseDatos'; // ✅ Importado
 
 const App: React.FC = () => {
     const [view, setView] = useState('login');
@@ -20,6 +20,7 @@ const App: React.FC = () => {
     const handleNavigateToAlumno = () => setView('alumno');
     const handleNavigateToEventos = () => setView('eventos');
     const handleNavigateToReporte = () => setView('reporte');
+    const handleNavigateToBaseDatos = () => setView('basedatos'); // ✅ Nuevo manejador
 
     return (
         <div>
@@ -37,16 +38,13 @@ const App: React.FC = () => {
             )}
             {view === 'scanner' && <Scanner />}
             {view === 'menu' && (
-                <>
-                    <Menu
-                        onLogout={handleLogout}
-                        onNavigateToAlumno={handleNavigateToAlumno}
-                        onNavigateToEventos={handleNavigateToEventos}
-                        onNavigateToReporte={handleNavigateToReporte}
-                    />
-                    {/* Aquí mostramos la tabla de usuarios */}
-                    <TablaUsuariosVista />
-                </>
+                <Menu
+                    onLogout={handleLogout}
+                    onNavigateToAlumno={handleNavigateToAlumno}
+                    onNavigateToEventos={handleNavigateToEventos}
+                    onNavigateToReporte={handleNavigateToReporte}
+                    onNavigateToBaseDatos={handleNavigateToBaseDatos} // ✅ Prop añadida
+                />
             )}
             {view === 'alumno' && (
                 <Alumno
@@ -63,6 +61,12 @@ const App: React.FC = () => {
             {view === 'reporte' && (
                 <Reporte
                     onLogout={handleLogout}
+                />
+            )}
+            {view === 'basedatos' && (
+                <VerBaseDatos
+                    onLogout={handleLogout}
+                    onNavigateToMenu={() => setView('menu')}
                 />
             )}
         </div>
