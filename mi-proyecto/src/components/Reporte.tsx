@@ -17,43 +17,40 @@ import { supabase } from '../services/supabase';
 // Registro de módulos necesarios para Chart.js
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const Reporte: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
+const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> = ({ onLogout, onNavigateToMenu }) => {
     const [asociacionData, setAsociacionData] = useState<{ labels: string[]; data: number[] }>({ labels: [], data: [] });
     const [areaData, setAreaData] = useState<{ labels: string[]; data: number[] }>({ labels: [], data: [] });
 
-    // Función para agrupar datos manualmente
     const countBy = (arr: any[], key: string): Record<string, number> => {
         return arr.reduce((acc: Record<string, number>, item) => {
-            const valor = item[key] || 'Desconocido'; // evitar claves undefined
+            const valor = item[key] || 'Desconocido';
             acc[valor] = (acc[valor] || 0) + 1;
             return acc;
         }, {});
     };
+
     const generarExcel = () => {
         const wb = XLSX.utils.book_new();
-    
-        // Hoja: Personas por Asociación
+
         const asociacionSheetData = [
             ['Asociación', 'Cantidad de Personas'],
             ...asociacionData.labels.map((label, index) => [label, asociacionData.data[index]])
         ];
         const ws1 = XLSX.utils.aoa_to_sheet(asociacionSheetData);
         XLSX.utils.book_append_sheet(wb, ws1, 'Por Asociación');
-    
-        // Hoja: Personas por Área de Destino
+
         const areaSheetData = [
             ['Área de Destino', 'Cantidad de Personas'],
             ...areaData.labels.map((label, index) => [label, areaData.data[index]])
         ];
         const ws2 = XLSX.utils.aoa_to_sheet(areaSheetData);
         XLSX.utils.book_append_sheet(wb, ws2, 'Por Área de Destino');
-    
-        // Guardar el archivo
+
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
         const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
         saveAs(blob, 'Reporte_Visitas.xlsx');
     };
-    
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -66,14 +63,12 @@ const Reporte: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                     return;
                 }
 
-                // Agrupar por asociación
                 const asociacionGroup = countBy(visitas, 'asociacion');
                 const asociacionLabels = Object.keys(asociacionGroup);
                 const asociacionCounts = Object.values(asociacionGroup);
 
                 setAsociacionData({ labels: asociacionLabels, data: asociacionCounts });
 
-                // Agrupar por área de destino
                 const areaGroup = countBy(visitas, 'area_destino');
                 const areaLabels = Object.keys(areaGroup);
                 const areaCounts = Object.values(areaGroup);
@@ -89,13 +84,13 @@ const Reporte: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     }, []);
 
     return (
-        <div>
+        <div className="container">
+            <button onClick={onNavigateToMenu}>Volver al Menú</button>
             <button onClick={onLogout}>Cerrar Sesión</button>
             <button onClick={generarExcel}>Generar Excel</button>
 
             <h2>Reporte de Datos</h2>
 
-            {/* Gráfica: Personas por Asociación */}
             <div>
                 <h3>Personas por Asociación</h3>
                 <Bar
@@ -115,7 +110,6 @@ const Reporte: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                 />
             </div>
 
-            {/* Gráfica: Personas por Área de Destino */}
             <div>
                 <h3>Personas por Área de Destino</h3>
                 <Bar

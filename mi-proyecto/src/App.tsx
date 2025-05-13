@@ -20,7 +20,8 @@ const App: React.FC = () => {
     const handleNavigateToAlumno = () => setView('alumno');
     const handleNavigateToEventos = () => setView('eventos');
     const handleNavigateToReporte = () => setView('reporte');
-    const handleNavigateToBaseDatos = () => setView('basedatos'); // ✅ Nuevo manejador
+    const handleNavigateToBaseDatos = () => setView('basedatos');
+    const handleNavigateToMenu = () => setView('menu'); // ✅ Añadido el manejador
 
     return (
         <div>
@@ -43,30 +44,31 @@ const App: React.FC = () => {
                     onNavigateToAlumno={handleNavigateToAlumno}
                     onNavigateToEventos={handleNavigateToEventos}
                     onNavigateToReporte={handleNavigateToReporte}
-                    onNavigateToBaseDatos={handleNavigateToBaseDatos} // ✅ Prop añadida
+                    onNavigateToBaseDatos={handleNavigateToBaseDatos}
                 />
             )}
             {view === 'alumno' && (
                 <Alumno
                     onLogout={handleLogout}
-                    onNavigateToMenu={() => setView('menu')}
+                    onNavigateToMenu={handleNavigateToMenu} // ✅ Enviar la función aquí
                 />
             )}
             {view === 'eventos' && (
                 <EventosEspeciales
                     onLogout={handleLogout}
-                    onNavigateToMenu={() => setView('menu')}
+                    onNavigateToMenu={handleNavigateToMenu} // ✅ Enviar la función aquí
                 />
             )}
             {view === 'reporte' && (
                 <Reporte
                     onLogout={handleLogout}
+                    onNavigateToMenu={handleNavigateToMenu} // ✅ Enviar la función aquí
                 />
             )}
             {view === 'basedatos' && (
                 <VerBaseDatos
                     onLogout={handleLogout}
-                    onNavigateToMenu={() => setView('menu')}
+                    onNavigateToMenu={handleNavigateToMenu} // ✅ Enviar la función aquí
                 />
             )}
         </div>

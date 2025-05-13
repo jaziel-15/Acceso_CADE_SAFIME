@@ -8,7 +8,7 @@ interface VerBaseDatosProps {
 
 const VerBaseDatos: React.FC<VerBaseDatosProps> = ({ onLogout, onNavigateToMenu }) => {
   return (
-    <div>
+    <div className="container">
       <h2>Base de Datos de Usuarios</h2>
 
       {/* Botones de navegación */}
