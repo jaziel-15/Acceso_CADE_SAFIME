@@ -1,7 +1,7 @@
 import { QRCodeCanvas } from 'qrcode.react';
 
 const QRCodeComponent = () => {
-  const url = 'https://forms.office.com/Pages/ResponsePage.aspx?id=EZDKymp73kSGHwlaLKiDt9sSnwjMEFlDjP7QeY0WOiNUOFpUWlVNWTlIWFc5VlZSRTFOQ0JCSklGOC4u';
+  const url = 'https://docs.google.com/forms/d/e/1FAIpQLSdr2fbu5bRwreB479QAo34H94ZRPbsVdYd54CcoJVvnEPc95Q/viewform?usp=header';
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
