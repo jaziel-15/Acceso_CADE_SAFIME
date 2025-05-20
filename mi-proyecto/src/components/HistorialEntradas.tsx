@@ -75,10 +75,10 @@ const Alumnos: React.FC = () => {
               </th>
             </tr>
             <tr>
-              <th style={{ border: '1px solid #ddd', padding: '10px', width: '15%' }}>Matrícula</th>
-              <th style={{ border: '1px solid #ddd', padding: '10px', width: '17%' }}>Nombre</th>
-              <th style={{ border: '1px solid #ddd', padding: '10px', width: '15%' }}>Programa</th>
+              <th style={{ border: '1px solid #ddd', padding: '10px', width: '15%' }}>Nombre</th>
+              <th style={{ border: '1px solid #ddd', padding: '10px', width: '17%' }}>Matrícula</th>
               <th style={{ border: '1px solid #ddd', padding: '10px', width: '15%' }}>Asociación</th>
+              <th style={{ border: '1px solid #ddd', padding: '10px', width: '15%' }}>Programa</th>
               <th style={{ border: '1px solid #ddd', padding: '10px', width: '10%' }}>Destino</th>
               <th style={{ border: '1px solid #ddd', padding: '10px', width: '15%' }}>Motivo</th>
               <th style={{ border: '1px solid #ddd', padding: '10px', width: '13%' }}>Fecha/Hora</th>
