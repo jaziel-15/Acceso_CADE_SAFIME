@@ -88,6 +88,18 @@ header .logo-uanl {
     align-items: center;
 }
 
+.evento-form{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.evento-form input[type="date"]{
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
 
 
 
