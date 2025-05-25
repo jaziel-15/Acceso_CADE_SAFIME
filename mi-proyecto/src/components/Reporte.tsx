@@ -19,9 +19,9 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> = ({ onLogout, onNavigateToMenu }) => {
     const [asociacionData, setAsociacionData] = useState<{ labels: string[]; data: number[] }>({ labels: [], data: [] });
-    const [areaData, setAreaData] = useState<{ labels: string[]; data: number[] }>({ labels: [], data: [] });
+    const [destinoData, setDestinoData] = useState<{ labels: string[]; data: number[] }>({ labels: [], data: [] });
     const [asociacionMesData, setAsociacionMesData] = useState<{ labels: string[]; data: number[][]; asociaciones: string[] }>({ labels: [], data: [], asociaciones: [] });
-    const [areaMesData, setAreaMesData] = useState<{ labels: string[]; data: number[][]; areas: string[] }>({ labels: [], data: [], areas: [] });
+    const [destinoMesData, setDestinoMesData] = useState<{ labels: string[]; data: number[][]; destinos: string[] }>({ labels: [], data: [], destinos: [] });
     const [asociacionDiaData, setAsociacionDiaData] = useState<{ labels: string[]; data: number[][]; asociaciones: string[] }>({ labels: [], data: [], asociaciones: [] });
     const [selectedReport, setSelectedReport] = useState<string>('asociacion');
 
@@ -53,10 +53,10 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
                 }));
                 break;
 
-            case 'area':
-                datosExcel = areaData.labels.map((label, i) => ({
+            case 'destino':
+                datosExcel = destinoData.labels.map((label, i) => ({
                     'Área de destino': label,
-                    Cantidad: areaData.data[i]
+                    Cantidad: destinoData.data[i]
                 }));
                 break;
 
@@ -70,11 +70,11 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
                 });
                 break;
 
-            case 'mes-area':
-                datosExcel = areaMesData.labels.map((mes, i) => {
+            case 'mes-destino':
+                datosExcel = destinoMesData.labels.map((mes, i) => {
                     const fila: any = { Mes: mes };
-                    areaMesData.areas.forEach((nombreArea, j) => {
-                        fila[nombreArea] = areaMesData.data[i]?.[j] || 0;
+                    destinoMesData.destinos.forEach((nombreDestino, j) => {
+                        fila[nombreDestino] = destinoMesData.data[i]?.[j] || 0;
                     });
                     return fila;
                 });
@@ -105,7 +105,7 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
 
     const countByMonthAndKey = (arr: any[], key: string): Record<string, Record<string, number>> => {
         return arr.reduce((acc: Record<string, Record<string, number>>, item) => {
-            const fecha = item.hora_llegada ? new Date(item.hora_llegada) : null;
+            const fecha = item.timestamp ? new Date(item.timestamp) : null;
             if (!fecha) return acc;
 
             const mes = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}`;
@@ -120,7 +120,7 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
 
     const countByDayAndKey = (arr: any[], key: string): Record<string, Record<string, number>> => {
         return arr.reduce((acc: Record<string, Record<string, number>>, item) => {
-            const fecha = item.hora_llegada ? new Date(item.hora_llegada) : null;
+            const fecha = item.timestamp ? new Date(item.timestamp) : null;
             if (!fecha) return acc;
 
             const dia = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}-${String(fecha.getDate()).padStart(2, '0')}`;
@@ -136,9 +136,9 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data: visitas, error } = await supabase
-                    .from('visitas')
-                    .select('hora_llegada, asociacion, area_destino');
+                const { data: alumnos, error } = await supabase
+                    .from('alumnos')
+                    .select('timestamp, asociacion, destino');
 
                 if (error) {
                     console.error('Error al cargar datos:', error);
@@ -146,35 +146,35 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
                 }
 
                 // Agrupar por asociación
-                const asociacionGroup = countBy(visitas, 'asociacion');
+                const asociacionGroup = countBy(alumnos, 'asociacion');
                 setAsociacionData({ labels: Object.keys(asociacionGroup), data: Object.values(asociacionGroup) });
 
-                // Agrupar por área de destino
-                const areaGroup = countBy(visitas, 'area_destino');
-                setAreaData({ labels: Object.keys(areaGroup), data: Object.values(areaGroup) });
+                // Agrupar por destino
+                const destinoGroup = countBy(alumnos, 'destino');
+                setDestinoData({ labels: Object.keys(destinoGroup), data: Object.values(destinoGroup) });
 
-                // Obtener todas las asociaciones y áreas únicas
-                const todasAsociaciones = [...new Set(visitas.map(v => v.asociacion).filter(Boolean))];
-                const todasAreas = [...new Set(visitas.map(v => v.area_destino).filter(Boolean))];
+                // Obtener todas las asociaciones y destinos únicos
+                const todasAsociaciones = [...new Set(alumnos.map(v => v.asociacion).filter(Boolean))];
+                const todosDestinos = [...new Set(alumnos.map(v => v.destino).filter(Boolean))];
 
                 // Agrupar por mes y asociación
-                const asociacionPorMes = countByMonthAndKey(visitas, 'asociacion');
+                const asociacionPorMes = countByMonthAndKey(alumnos, 'asociacion');
                 const mesesAsociacion = Object.keys(asociacionPorMes).sort();
                 const datosAsociacionPorMes = mesesAsociacion.map(mes => 
                     todasAsociaciones.map(asociacion => asociacionPorMes[mes]?.[asociacion] || 0)
                 );
                 setAsociacionMesData({ labels: mesesAsociacion, data: datosAsociacionPorMes, asociaciones: todasAsociaciones });
 
-                // Agrupar por mes y área de destino
-                const areaPorMes = countByMonthAndKey(visitas, 'area_destino');
-                const mesesArea = Object.keys(areaPorMes).sort();
-                const datosAreaPorMes = mesesArea.map(mes => 
-                    todasAreas.map(area => areaPorMes[mes]?.[area] || 0)
+                // Agrupar por mes y destino
+                const destinoPorMes = countByMonthAndKey(alumnos, 'destino');
+                const mesesDestino = Object.keys(destinoPorMes).sort();
+                const datosDestinoPorMes = mesesDestino.map(mes => 
+                    todosDestinos.map(destino => destinoPorMes[mes]?.[destino] || 0)
                 );
-                setAreaMesData({ labels: mesesArea, data: datosAreaPorMes, areas: todasAreas });
+                setDestinoMesData({ labels: mesesDestino, data: datosDestinoPorMes, destinos: todosDestinos });
 
                 // Agrupar por día y asociación
-                const asociacionPorDia = countByDayAndKey(visitas, 'asociacion');
+                const asociacionPorDia = countByDayAndKey(alumnos, 'asociacion');
                 const diasAsociacion = Object.keys(asociacionPorDia).sort();
                 const datosAsociacionPorDia = diasAsociacion.map(dia => 
                     todasAsociaciones.map(asociacion => asociacionPorDia[dia]?.[asociacion] || 0)
@@ -195,13 +195,13 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
             <button onClick={onLogout}>Cerrar Sesión</button>
             <button onClick={exportarExcelPorGrafico}>Exportar gráfico a Excel</button>
 
-            <h2>Reporte de Datos</h2>
+            <h2>Reporte de Datos de Alumnos</h2>
 
             <select id="reporte-select" value={selectedReport} onChange={(e) => setSelectedReport(e.target.value)}>
                 <option value="asociacion">Asociación x Cantidad</option>
-                <option value="area">Área de destino x Cantidad</option>
+                <option value="destino">Destino x Cantidad</option>
                 <option value="mes-asociacion">Meses x Asociación</option>
-                <option value="mes-area">Meses x Área de Destino</option>
+                <option value="mes-destino">Meses x Destino</option>
                 <option value="asociacion-dia">Asociación x Día</option>
             </select>
 
@@ -220,15 +220,15 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
                 />
             )}
 
-            {selectedReport === 'area' && (
+            {selectedReport === 'destino' && (
                 <Bar
                     data={{
-                        labels: areaData.labels,
+                        labels: destinoData.labels,
                         datasets: [{
                             label: 'Cantidad',
-                            data: areaData.data,
-                            backgroundColor: colores.slice(0, areaData.data.length),
-                            borderColor: colores.slice(0, areaData.data.length).map(color => color.replace('0.8', '1')),
+                            data: destinoData.data,
+                            backgroundColor: colores.slice(0, destinoData.data.length),
+                            borderColor: colores.slice(0, destinoData.data.length).map(color => color.replace('0.8', '1')),
                             borderWidth: 1
                         }]
                     }}
@@ -250,13 +250,13 @@ const Reporte: React.FC<{ onLogout: () => void; onNavigateToMenu: () => void }> 
                 />
             )}
 
-            {selectedReport === 'mes-area' && (
+            {selectedReport === 'mes-destino' && (
                 <Bar
                     data={{
-                        labels: areaMesData.labels,
-                        datasets: areaMesData.areas.map((area, index) => ({
-                            label: area,
-                            data: areaMesData.data.map(mesData => mesData[index] || 0),
+                        labels: destinoMesData.labels,
+                        datasets: destinoMesData.destinos.map((destino, index) => ({
+                            label: destino,
+                            data: destinoMesData.data.map(mesData => mesData[index] || 0),
                             backgroundColor: colores[index % colores.length],
                             borderColor: colores[index % colores.length].replace('0.8', '1'),
                             borderWidth: 1
