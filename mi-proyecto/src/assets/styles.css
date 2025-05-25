@@ -123,6 +123,7 @@ h2 {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
 select,
 button {
     width: 100%;
